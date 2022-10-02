@@ -41,6 +41,8 @@
     <Folder Include="Bug_tracker\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bug_tracker\static\content\login_style.css" />
+    <Content Include="Bug_tracker\templates\empty_ticket.html" />
     <Content Include="requirements.txt" />
     <Content Include="Bug_tracker\static\content\bootstrap.css" />
     <Content Include="Bug_tracker\static\content\bootstrap.min.css" />
@@ -64,8 +66,8 @@
     <Content Include="Bug_tracker\static\scripts\respond.js" />
     <Content Include="Bug_tracker\static\scripts\respond.min.js" />
     <Content Include="Bug_tracker\static\scripts\_references.js" />
-    <Content Include="Bug_tracker\templates\about.html" />
-    <Content Include="Bug_tracker\templates\contact.html" />
+    <Content Include="Bug_tracker\templates\tickets.html" />
+    <Content Include="Bug_tracker\templates\login.html" />
     <Content Include="Bug_tracker\templates\index.html" />
     <Content Include="Bug_tracker\templates\layout.html" />
   </ItemGroup>
