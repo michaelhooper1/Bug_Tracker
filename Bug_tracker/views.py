@@ -3,14 +3,17 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template, session, flash, redirect, url_for
+from flask import render_template, session, flash, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from Bug_tracker import app
+from passlib.hash import sha256_crypt
 import sqlite3
 
 #Classes for the database
 
 db = SQLAlchemy(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.sqlite3"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
 class User(db.Model):
@@ -20,13 +23,25 @@ class User(db.Model):
     email = db.Column(db.String(100))
     password = db.Column(db.Text, nullable = False)
 
-    tracks = db.relationship("UserTrackingCompany", lazy="subquery", back_populates = "user")
+    
 
     def __init__(self, name, username, email, password):
         self.name = name
         self.username = username
         self.email = email
         self.password = password
+
+class Projects(db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    c_name = db.Column(db.String(200))
+    c_index = db.Column(db.String(10))
+
+    
+    def __init__(self, c_name, c_index):
+        self.c_name = c_name
+        self.c_index = c_index
+
+
 
 
 #Template functions for view pages
@@ -47,8 +62,54 @@ def home():
         return redirect(url_for("login"))
     
 
+
+
 @app.route('/login')
 def login():
+    if request.method == "POST":
+        with sqlite3.connect("users.sqlite3") as connection:
+
+            session.permanent = True
+            user = request.form["nm"]
+            password = request.form["password"]
+            session["user"] = user
+
+            c = connection.cursor()
+
+            data = c.execute("SELECT * FROM user WHERE username = '{}'".format(user))
+
+            data = c.fetchone()[4]
+
+            session["user_data"] = data
+            id_data = c.execute("SELECT id from user where username = '{}'".format(user))
+
+            id_data = c.fetchone()[0]
+
+            session["id"] = id_data
+       
+
+            found_user = sha256_crypt.verify(password, data)
+
+            
+
+            if found_user:
+                #session["email"] = found_user.email
+                return redirect(url_for("user"))
+
+            elif not found_user:
+                flash("Incorrect password, please enter your correct password")
+                
+                session.pop("user", None)
+                return redirect(url_for("home"))
+
+    else:
+        if "user" in session:
+            flash("You're currently logged in")
+            return redirect(url_for("user"))
+
+
+
+
     """Renders the login page."""
     return render_template(
         'login.html',

@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
+
+
 {%block head %}
+
 
 
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'content/login_style.css')}}">
@@ -20,7 +23,7 @@
         <!--<div class="fadeIn first">
             User icon
         </div>-->
-
+        
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <!-- Tabs Titles -->
@@ -32,7 +35,7 @@
                 <!-- Login Form -->
                 <form method="POST">
                     <input type="text" id="username" class="fadeIn second" name="nm" placeholder="Username">
-
+                    
                     <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
 
                     <input type="submit" class="fadeIn fourth" value="Log In">

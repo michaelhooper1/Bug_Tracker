@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bug_tracker\static\content\login_style.css" />
+    <Content Include="Bug_tracker\static\content\dashboard.css" />
+    <Content Include="Bug_tracker\static\content\ticket.css" />
+    <Content Include="Bug_tracker\static\scripts\Dashboard.js" />
     <Content Include="Bug_tracker\templates\empty_ticket.html" />
     <Content Include="requirements.txt" />
     <Content Include="Bug_tracker\static\content\bootstrap.css" />
